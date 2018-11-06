@@ -290,17 +290,19 @@
 
     - Creation;
 
+    - Execution;
+
     - Termination;
 
     - Joining.
 
-  - Linux implements threads as light-weight processes, which are spawned with cloning instead of forking.
+  - Linux implements threads as light-weight processes, which are spawned by cloning instead of forking.
 
 - Concurrency issues:
 
-  - A race condition is when the final value of a datum non-deterministically depends on the execution order of several processes that updates it concurrently.
+  - A race condition is when the final value of a datum depends on the execution order of several processes that updates it concurrently.
 
-  - A critical section is a minimal section of instructions that updates a shared datum.
+  - A critical section is a minimal section of code that updates a shared datum.
 
   - An atomic operation is one that is guaranteed to finish without preemption once started.
 
@@ -353,3 +355,63 @@
     - A wait decrements the flag, and adds a process to the queue and blocks it if the flag is now negative;
 
     - A post increments that flag, pops the head of the queue, and unblocks it.
+
+- Deadlocks:
+
+  - Necessary conditions for a deadlock:
+
+    - Mutual exclusion;
+
+    - Hold-and-wait;
+
+    - No preemption;
+
+    - Circular wait.
+
+  - Dealing with deadlocks:
+
+    - Prevention:
+
+      - Atomic request bags;
+
+      - Preemption;
+
+      - Resource ordering;
+
+    - Avoidance:
+
+      - Avoidance by scheduling;
+
+      - Banker's algorithm, i.e. avoidance by granting;
+
+    - Detection and recovery:
+
+      - Abort-all;
+
+      - Abort-till-success.
+
+# Memory Virtualization
+
+- Purposes of memory virtualization:
+
+  - Memory sharing among applications;
+
+  - Accomodation of oversided memory spaces;
+
+  - Memory integrity protection.
+
+- Each application sees a contiguous memory space starting from 0 through its virtual addresses.
+
+- Memory address translation:
+
+  - The memory management unit:
+
+    - Translates virtual addresses to physical addresses;
+
+    - Checks for segmentation faults.
+
+  - The OS:
+
+    - Manages address space profiles;
+
+    - Maintains memory allocation records.
