@@ -415,3 +415,59 @@
     - Manages address space profiles;
 
     - Maintains memory allocation records.
+
+- Segmentation:
+
+  - Segmentation divides an address space to fixed-length segments and allocates them memory independently and contiguously per their used sized.
+
+  - With segmentation, the first few bits of a logical address represent the segment id, and the remainder stores the offset.
+
+  - Organization of a segment descriptor:
+
+    - Base;
+
+    - Bound;
+
+    - Flags:
+
+      - Grow bit;
+
+      - Read bit;
+
+      - Write bit;
+
+      - Execute bit;
+
+      - Valid bit.
+
+  - The segment table of a process holds the descriptors for all segments of it.
+
+  - Memory organization with segmentation:
+
+    - A segment is a minimal contiguous unit for memory allocation.
+
+    - A segment is alloted memory per its used size, rather than maximum size.
+
+  - Fragmentation with segmentation:
+
+    - Memory fragmentation is the phenonmenon that the free space is scattered in small pieces, characterized by the situation when no single piece can accomodate an incoming segment while the total free space can.
+
+      - Combating fragmentation:
+
+        - Memory allocation algorithms:
+
+          - Best fit;
+
+          - Worst fit;
+
+          - First fit;
+
+          - Next fit.
+
+        - Coalesing;
+
+        - Compacting.
+
+- Paging:
+
+  - Paging divides an address space into fixed-length pages and allocates them memory independently and contiguously in fixed frames of the same length.
