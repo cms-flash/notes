@@ -451,9 +451,7 @@
   - Fragmentation with segmentation:
 
     - Memory fragmentation is the phenonmenon that the free space is scattered in small pieces, characterized by the situation when no single piece can accomodate an incoming segment while the total free space can.
-
       - Combating fragmentation:
-
         - Memory allocation algorithms:
 
           - Best fit;
@@ -471,3 +469,41 @@
 - Paging:
 
   - Paging divides an address space into fixed-length pages and allocates them memory independently and contiguously in fixed frames of the same length.
+
+  - With paging, the first few bits of a logcial address represents the page number, while the remainder stores the offset.
+
+  - Organization of a page descriptor:
+
+    - Frame id;
+
+    - Flags:
+
+      - Read bit;
+
+      - Write bit;
+
+      - Execute bit;
+
+      - Valid bit;
+
+      - Present bit;
+
+      - Reference bit.
+
+  - With paging, each present page is allocated to a frame.
+
+  - The page table of a process holds the descriptors for all pages of it.
+
+- Practical paging:
+
+  - With naive paging, each logical memory access incurs two physical accesses, and the page table is exceedingly large in a modern architecture.
+
+  - Elements of practical paging:
+
+    - Page table buffer;
+
+    - Hierarchical page tables.
+
+  - Page table buffer:
+
+    - Page table buffer is a dedicated cache for page tables in the MMU.
