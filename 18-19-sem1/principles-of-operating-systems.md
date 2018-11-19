@@ -507,3 +507,17 @@
   - Page table buffer:
 
     - Page table buffer is a dedicated cache for page tables in the MMU.
+
+- Page fault and replacement:
+
+  - A page fault is a page access failure caused by unpresence.
+
+  - Solving a page fault:
+
+    - The OS requests to load the page from the disk and blocks the fault-triggering process;
+
+    - Page is loaded, and an interrupt triggers the OS to ready the process;
+
+    - Process resumes, re-attempts access, causes a TLB update, and gets the data.
+
+  - The page replacement policy chooses a present page to swap out when the memory is full and a page loading is requested.
