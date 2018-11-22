@@ -521,3 +521,13 @@
     - Process resumes, re-attempts access, causes a TLB update, and gets the data.
 
   - The page replacement policy chooses a present page to swap out when the memory is full and a page loading is requested.
+
+# Persistence
+
+- A computer typically uses external persistence devices, like hard drives, solid-state drives, and optical disks.
+
+- A persistence device typically provides an interface through which data is organized in an array of fixed-sized intervals called logical blocks.
+
+- A file system is a component of an OS that provides an interface over persistence devices through which data is organized in variable-lengthed entities indexable by a logical path, called files.
+
+
