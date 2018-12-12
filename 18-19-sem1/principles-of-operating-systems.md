@@ -394,23 +394,23 @@
 
 - Purposes of memory virtualization:
 
-  - Memory sharing among applications;
+  - Memory sharing;
 
-  - Accomodation of oversided memory spaces;
+  - Accomodation of oversized memory spaces;
 
-  - Memory integrity protection.
+  - Memory integrity.
 
 - Each application sees a contiguous memory space starting from 0 through its virtual addresses.
 
 - Memory address translation:
 
-  - The memory management unit:
+  - Memory management unit:
 
     - Translates virtual addresses to physical addresses;
 
     - Checks for segmentation faults.
 
-  - The OS:
+  - OS:
 
     - Manages address space profiles;
 
@@ -418,11 +418,13 @@
 
 - Segmentation:
 
-  - Segmentation divides an address space to fixed-length segments and allocates them memory independently and contiguously per their used sized.
+  - Segmentation divides an address space to fixed-length intervals called segments and allocates them memory independently and contiguously per their used sized.
 
-  - With segmentation, the first few bits of a logical address represent the segment id, and the remainder stores the offset.
+  - The first few bits of a logical address represent the segment id, and the remainder stores the offset.
 
-  - Organization of a segment descriptor:
+  - Each process has a segment table where an entry describes each of its segments.
+
+  - Organization of a segment table entry:
 
     - Base;
 
@@ -432,95 +434,103 @@
 
       - Grow bit;
 
-      - Read bit;
+      - Right bits:
 
-      - Write bit;
+        - Read bit;
 
-      - Execute bit;
+        - Write bit;
+
+        - Execute bit;
 
       - Valid bit.
 
-  - The segment table of a process holds the descriptors for all segments of it.
+  - Fragmentation under segmentation:
 
-  - Memory organization with segmentation:
+    - Memory fragmentation is the phenonmenon that some free space cannot be used.
 
-    - A segment is a minimal contiguous unit for memory allocation.
+    - Combating fragmentation:
 
-    - A segment is alloted memory per its used size, rather than maximum size.
+      - Coalescing;
 
-  - Fragmentation with segmentation:
+      - Compaction;
 
-    - Memory fragmentation is the phenonmenon that the free space is scattered in small pieces, characterized by the situation when no single piece can accomodate an incoming segment while the total free space can.
-      - Combating fragmentation:
-        - Memory allocation algorithms:
+      - Memory allocation algorithms:
 
-          - Best fit;
+        - Best-fit;
 
-          - Worst fit;
+        - Worst-fit;
 
-          - First fit;
+        - First-fit;
 
-          - Next fit.
-
-        - Coalesing;
-
-        - Compacting.
+        - Next-fit.
 
 - Paging:
 
-  - Paging divides an address space into fixed-length pages and allocates them memory independently and contiguously in fixed frames of the same length.
+  - Paging divides an address space into fixed-length intervals called pages and allocates them memory independently and contiguously in fixed frames of the same length.
 
-  - With paging, the first few bits of a logcial address represents the page number, while the remainder stores the offset.
+  - The first few bits of a logcial address represent the page id, while the remainder stores the offset.
 
-  - Organization of a page descriptor:
+  - Each process has a page table where an entry describes each of its pages.
+
+  - Organization of a page table entry:
 
     - Frame id;
 
     - Flags:
 
-      - Read bit;
-
-      - Write bit;
-
-      - Execute bit;
+      - Right bits;
 
       - Valid bit;
 
       - Present bit;
 
-      - Reference bit.
+      - Use bit.
 
-  - With paging, each present page is allocated to a frame.
-
-  - The page table of a process holds the descriptors for all pages of it.
+  - Under paging, each present page is allocated to a frame.
 
 - Practical paging:
 
-  - With naive paging, each logical memory access incurs two physical accesses, and the page table is exceedingly large in a modern architecture.
+  - Under naive paging, each logical memory access incurs two physical accesses, and the page table is exceedingly large in a modern architecture.
 
   - Elements of practical paging:
 
-    - Page table buffer;
+    - Translation lookaside buffer;
 
     - Hierarchical page tables.
 
-  - Page table buffer:
+  - Translation lookaside buffer \(TLB):
 
-    - Page table buffer is a dedicated cache for page tables in the MMU.
+    - TLB is a dedicated cache for page tables in the MMU;
 
-- Page fault and replacement:
+    - TLB is associative;
+
+    - TLB supports hardware parallel search;
+
+    - A typical size of a TLB is 128 entries.
+
+- Page faults and replacement:
 
   - A page fault is a page access failure caused by unpresence.
 
   - Solving a page fault:
 
-    - The OS requests to load the page from the disk and blocks the fault-triggering process;
+    - OS requests to load the page from disk and blocks the fault-triggering process;
 
-    - Page is loaded, and an interrupt triggers the OS to ready the process;
+    - The page is loaded, and an interrupt triggers OS to ready the process;
 
-    - Process resumes, re-attempts access, causes a TLB update, and gets the data.
+    - The process resumes, re-attempts the access, causes a TLB update, and gets the data.
 
-  - The page replacement policy chooses a present page to swap out when the memory is full and a page loading is requested.
+  - Page replacement policies:
+
+    - First-in-first-out;
+
+    - Least-frequently-used;
+
+    - Least-recently-used;
+
+    - Clock replacement.
+
+  - Thrashing is the phenonmenon when over-subscription causes frequent out-swapping of pages of processes waiting for page loads.
 
 # Persistence
 
@@ -530,4 +540,112 @@
 
 - A file system is a component of an OS that provides an interface over persistence devices through which data is organized in variable-lengthed entities indexable by a logical path, called files.
 
+- Functions of a file system:
 
+  - File management;
+
+  - Space management;
+
+  - File integrity;
+
+  - File security.
+
+- File:
+
+  - A file is an abstract data type for persistence.
+
+  - Attributes of a file:
+
+    - Path;
+
+    - Id;
+
+    - Location;
+
+    - Size;
+
+    - Accessibility;
+
+    - Date, time, and ownership;
+
+    - Reference count.
+
+  - Operations on a file:
+
+    - Create;
+
+    - Delete;
+
+    - Open;
+
+    - Close;
+
+    - Read;
+
+    - Write.
+
+- The name of a file is partially stored in its directory tree, all other attributes are in its file control block \(FCB).
+
+- A directory is a file storing a set of mappings from basenames to file ids.
+
+- Links:
+
+  - Hard links:
+
+    - A hard link to a file is a directory entry with a different path but the same id.
+
+    - Directories cannot have hard links to avoid non-terminating traversals.
+
+    - Hard links are restricted to the same partition by their use of file ids.
+
+  - A soft link to a file is another file storing the path to the linked file.
+
+- File system organization:
+
+  - Superblock;
+
+  - FCB table;
+
+  - FCB bitmap;
+
+  - Block bitmap.
+
+- Superblock:
+
+  - The superblock of a file system stores the file system id, the number of FCBs, and pointers to the FCB table, the FCB bitmap, and the block bitmap.
+
+  - The superblock is usually the first block of a file system.
+
+- The FCB table is a fixed-length array of FCBs.
+
+- The FCB bitmap is a bitmap where each bit indicates the validity of an FCB in the FCB table.
+
+- The block bitmap is a bitmap where each bit indicates the availability of a logical block.
+
+- Block management of a file:
+
+  - Linked list of blocks;
+
+  - Block allocation table, i.e. a centralized linked list;
+
+  - Multi-level index, the preferred approach.
+
+- Free space management:
+
+  - Linked free list;
+
+  - Centralized free list;
+
+  - Block bitmap, the preferred approach.
+
+- File security:
+
+  - Upon an open, the file system check accessbilities, creates an entry in the open file table, and records the granted rights.
+
+  - Upon a read, the OS checks the access rights.
+
+- File integrity:
+
+  - An OS typically provides utilities for file system backup and consistency checking.
+
+  - A journaling file system performs each metadata update by logging, write-out, and completing to ensure consistency.
