@@ -132,6 +132,32 @@
 
   - Actions upon SIGKILL and SIGSTOP cannot be overridden.
 
+  - Temporally nearby signals may merge.
+
+- Pipes:
+
+  - A pipe is FIFO data structure for inter-process communication.
+
+  - Components:
+
+    - Read end, a read-only open file;
+
+    - Write end, a write-only open file;
+
+    - Buffer, storing written data to be read.
+
+  - When a process writes to the write end of a pipe, the data is stored in the buffer, until another process reads it.
+
+  - Branch cases:
+
+    - Writing to a full pipe blocks the writer by default.
+
+    - Reading from an empty pipe blocks the reader.
+
+    - A pipe with no open read-end refernces delivers a SIGPIPE to any writer and fails the write.
+
+    - An empty pipe with no open write-end references gives an EOF to any reader.
+
 # CPU Virtualization
 
 - An OS virtualizes the CPU by context switches, serves processes via system calls, and preempts non-cooperative applications through interrupts.
